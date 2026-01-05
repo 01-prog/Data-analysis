@@ -3,7 +3,7 @@ import json
 import time
 import random
 
-def fetch_vinted_items(query="sneakers", pages=1, country = "fr"):
+def fetch_vinted_items(query=["32"], pages=1, country = "fr"):
     # 1. Configuration de la session
     session = requests.Session()
     
@@ -11,7 +11,6 @@ def fetch_vinted_items(query="sneakers", pages=1, country = "fr"):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Accept": "application/json, text/plain, */*",
-        "Accept-Language": "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7",
         "Referer": "https://www.vinted.fr/"
     }
     session.headers.update(headers)
@@ -19,7 +18,7 @@ def fetch_vinted_items(query="sneakers", pages=1, country = "fr"):
     try:
         # 2. Étape Initiale : Visiter la page d'accueil pour obtenir les cookies (CSRF, session)
         print("Initialisation de la session (récupération des cookies)...")
-        response_home = session.get("https://www.vinted.fr/")
+        response_home = session.get(f"https://www.vinted.{country}/")
         
         if response_home.status_code != 200:
             print(f"Erreur lors de l'accès à la page d'accueil: {response_home.status_code}")
@@ -141,9 +140,10 @@ def append_to_jsonl(file_path, items):
 if __name__ == "__main__":
     liste = ["32", "1206", "34", "85", "84", "92", "257", "76", "79", "80", "2910", "30", "13", "10", "12", "9", "1035", "29", "73", "1037", "8", "11", "183", "15", "28", "1176", "1782",
              "1233", "2657", "1238", "2659", "1242", "2656", "2970", "2969", "2968", "1452", "2954", "2623", "2955", "1049", "2953", "543", "2950", "215", "2632", "2952", "2951", "2949", "2630"]  # Liste des catalog_ids à rechercher
-    country = ["fr", "de", "es", "com", "it", "nl", "be", "pt", "at", "pl", "cz", "lu", "dk", "ee", "se", "gr", "ie", "hr", "co.uk", "sk", "si", "ro", "lv", "lt", "hu"]
+    country = ["de", "fr", "es", "com", "it", "nl", "be", "pt", "at", "pl", "cz", "lu", "dk", "ee", "se", "gr", "ie", "hr", "co.uk", "sk", "si", "ro", "lv", "lt", "hu"]
+    country2 = ["fr"]
     for ctry in country:
-        resultats = fetch_vinted_items(query=liste, pages=1, country=ctry)  # Ajouter d'autres pays si nécessaire
+        resultats = fetch_vinted_items(query=liste, pages=10, country=ctry)  # Ajouter d'autres pays si nécessaire
         total = len(resultats) if resultats else 0
         print(f"\nTotal articles récupérés : {total}")
         # Écrire les résultats dans le fichier vinted_products_api.jsonl (ajout sans doublons)
