@@ -63,7 +63,9 @@ def fetch_vinted_items(query=["32"], pages=1, country = "fr"):
                             "taille": item.get("size_title"),
                             "marque": item.get("brand_title"),
                             "url": item.get("url"),
+                            "status": item.get("status"),
                             "status_id": item.get("status_id"),
+                            "item_box": item.get("item_box"),
                             "vendeur_id": item.get("user", {}).get("id"),
                             "vendeur_nom": item.get("user", {}).get("login"),
                             "favoris": item.get("favorites_count"),
@@ -148,8 +150,8 @@ if __name__ == "__main__":
         print(f"\nTotal articles récupérés : {total}")
         # Écrire les résultats dans le fichier vinted_products_api.jsonl (ajout sans doublons)
         if resultats:
-            added = append_to_jsonl("vinted_products_api.jsonl", resultats)
+            added = append_to_jsonl("vinted_products_test.jsonl", resultats)
             skipped = total - added
-            print(f"Résultats ajoutés à 'vinted_products_api.jsonl' ({added} nouvelles lignes).")
+            print(f"Résultats ajoutés à 'vinted_products_test.jsonl' ({added} nouvelles lignes).")
             if skipped:
                 print(f"{skipped} items ignorés (déjà présents ou sans id).")
