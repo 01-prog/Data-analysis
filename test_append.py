@@ -85,7 +85,7 @@ def fetch_vinted_items(query=["32"], pages=1, country = "fr"):
                     print(f"Erreur inconnue: {response_api.status_code}")
                 
                 # Pause entre les pages pour réduire le risque de ban
-                time.sleep(random.uniform(3, 8))
+                time.sleep(random.uniform(3, 6))
 
         return all_items
 
@@ -172,13 +172,13 @@ if __name__ == "__main__":
     country = [ "co.uk", "sk", "si", "ro", "lv", "lt", "hu","de", "fr", "es", "com", "it", "nl", "be", "pt", "at", "pl", "cz", "lu", "dk", "ee", "se", "gr", "ie", "hr"]
     country2 = ["fr"]
     for ctry in country[8::]:
-        resultats = fetch_vinted_items(query=liste, pages=1, country=ctry)  # Ajouter d'autres pays si nécessaire
+        resultats = fetch_vinted_items(query=liste, pages=5, country=ctry)  # Ajouter d'autres pays si nécessaire
         total = len(resultats) if resultats else 0
         print(f"\nTotal articles récupérés : {total}")
         # Écrire les résultats dans le fichier vinted_products_api.jsonl (ajout sans doublons)
         if resultats:
-            added = append_to_jsonl("vinted_products_test.jsonl", resultats)
+            added = append_to_jsonl("vinted_products_api.jsonl", resultats)
             skipped = total - added
-            print(f"Résultats ajoutés à 'vinted_products_test.jsonl' ({added} nouvelles lignes).")
+            print(f"Résultats ajoutés à 'vinted_products_api.jsonl' ({added} nouvelles lignes).")
             if skipped:
                 print(f"{skipped} items ignorés (déjà présents ou sans id).")
