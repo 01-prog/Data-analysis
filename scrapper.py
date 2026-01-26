@@ -1,4 +1,4 @@
-import requests
+.import requests
 import json
 import time
 import random
@@ -138,7 +138,7 @@ def append_to_jsonl(file_path, items):
             f.write(json.dumps(item, ensure_ascii=False) + "\n")
 
     return len(to_write)
-
+cdo
 if __name__ == "__main__":
     liste = ["32", "1206", "34", "85", "84", "92", "257", "76", "79", "80", "2910", "30", "13", "10", "12", "9", "1035", "29", "73", "1037", "8", "11", "183", "15", "28", "1176", "1782",
             "1233", "2657", "1238", "2659", "1242", "2656", "2970", "2969", "2968", "1452", "2954", "2623", "2955", "1049", "2953", "543", "2950", "215", "2632", "2952", "2951", "2949", "2630"]  # Liste des catalog_ids à rechercher
